@@ -3,6 +3,8 @@ from typing import List, Optional
 
 from matplotlib import pyplot as plt
 
+from intersection import isIntersect_pro
+
 class Scene:
     def __init__(self, figures: Optional[List[Figure]] = None, workspace: float = 100):
         if figures is None:
@@ -11,6 +13,8 @@ class Scene:
             assert isinstance(figures, list) and workspace > 0
             self.__figures = figures
         self.__workspace = workspace
+
+        assert not isIntersect_pro(self.__figures), "The figures intersect"
 
     def add(self, figure: Figure):
         assert isinstance(figure, Figure)
