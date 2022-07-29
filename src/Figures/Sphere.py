@@ -1,6 +1,6 @@
 from typing import List
 
-from Figure import Figure
+from .Figure import Figure
 
 
 class Sphere(Figure):

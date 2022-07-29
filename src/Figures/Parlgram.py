@@ -1,7 +1,7 @@
 from typing import List
 import numpy as np
 
-from Figure import Figure
+from .Figure import Figure
 
 
 class Parlgram(Figure):

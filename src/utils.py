@@ -1,6 +1,6 @@
 from typing import List
 
-from Figure import Figure
+from Figures.Figure import Figure
 
 def split(x: List[float], figures: List[Figure]) -> List[List[float]]:
     res = []

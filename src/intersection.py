@@ -4,9 +4,9 @@ from typing import List
 
 from itertools import combinations
 
-from Parlgram import Parlgram
-from Cylinder import Cylinder
-from Figure import Figure
+from Figures.Parlgram import Parlgram
+from Figures.Cylinder import Cylinder
+from Figures.Figure import Figure
 
 
 def isIntersect(cyl: Cylinder, parl: Parlgram):

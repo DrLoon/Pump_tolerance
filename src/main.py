@@ -6,10 +6,10 @@ from typing import List, Tuple, Union
 
 import pygad
 
-from Parlgram import Parlgram
-from Cylinder import Cylinder
-from Sphere import Sphere
-from Figure import Figure
+from Figures.Parlgram import Parlgram
+from Figures.Cylinder import Cylinder
+from Figures.Sphere import Sphere
+from Figures.Figure import Figure
 from Scene import Scene
 
 from intersection import isIntersect_pro

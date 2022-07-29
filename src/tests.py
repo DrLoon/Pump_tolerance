@@ -1,6 +1,6 @@
 from main import isIntersect_pro
-from Parlgram import Parlgram
-from Cylinder import Cylinder
+from Figures.Parlgram import Parlgram
+from Figures.Cylinder import Cylinder
 
 def test(function_to_decorate):
     def try_except_wrapper():

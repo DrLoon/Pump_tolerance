@@ -1,4 +1,4 @@
-from Figure import Figure
+from Figures.Figure import Figure
 from typing import List, Optional
 
 from matplotlib import pyplot as plt
