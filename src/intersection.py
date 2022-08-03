@@ -44,3 +44,10 @@ def isIntersect_pro(figures: List[Figure]) -> bool:
         if isIntersect_pro_pair(i[0], i[1]):
             return True
     return False
+
+
+def isIntersect_pro_1_to_many(figure: Figure, figures: List[Figure]) -> bool:
+    for i in figures:
+        if isIntersect_pro_pair(figure, i):
+            return True
+    return False

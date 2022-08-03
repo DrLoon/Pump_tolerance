@@ -37,7 +37,7 @@ class Figure(ABC):
 
         good_points = filter(self.isBelongs, points)
 
-        if good_points == []:
+        if not good_points:
             return
 
         p = list(zip(*good_points))
