@@ -8,27 +8,20 @@ from intersection import isIntersect_pro
 class Scene:
     def __init__(self, figures: Optional[List[Figure]] = None, workspace: float = 100):
         if figures is None:
-            self.__figures = []
+            self.figures = []
         else:
             assert isinstance(figures, list) and workspace > 0
-            self.__figures = figures
+            self.figures = figures
         self.__workspace = workspace
 
-        assert not isIntersect_pro(self.__figures), "The figures intersect"
-
-    def add(self, figure: Figure):
-        assert isinstance(figure, Figure)
-        self.__figures.append(figure)
-
-    def figures(self) -> List[Figure]:
-        return self.__figures.copy()
+        assert not isIntersect_pro(self.figures), "The figures intersect"
 
     def figures_count(self) -> int:
-        return len(self.__figures)
+        return len(self.figures)
 
     def mutable_params_count(self) -> int:
         n = 0
-        for i in self.__figures:
+        for i in self.figures:
             n += len(i.mu_params)
         return n
 
@@ -38,6 +31,6 @@ class Scene:
     def plot(self, n: int = 10000, scatter: bool = False):
         fig = plt.figure()
         ax = fig.add_subplot(projection='3d')
-        for i in self.__figures:
+        for i in self.figures:
             i.plot(ax, n, scatter=scatter)
         plt.show()

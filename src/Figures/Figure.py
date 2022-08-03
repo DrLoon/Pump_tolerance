@@ -1,8 +1,9 @@
 from typing import List, Tuple, Dict
 import numpy as np
+from abc import ABC
 
 
-class Figure:
+class Figure(ABC):
     def ineq(self) -> Tuple[Dict]:
         raise NotImplementedError("")
 

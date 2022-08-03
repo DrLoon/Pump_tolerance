@@ -24,7 +24,7 @@ def add_tol_to_figures(tols: List[float], figures: List[Figure]):
     return new_figures
 
 def F(x: List[float], *args: Scene) -> float:
-    figures: List[Figure] = args[0].figures()
+    figures: List[Figure] = args[0].figures
 
     new_figures = add_tol_to_figures(x, figures)
 
@@ -39,7 +39,7 @@ def differential_evolution(scene: Scene):
 
 def genetic_algorithm(scene: Scene):
     def fitness_func(solution, solution_idx):
-        figures: List[Figure] = scene.figures()
+        figures: List[Figure] = scene.figures
 
         new_figures = add_tol_to_figures(solution, figures)
 
@@ -77,13 +77,13 @@ def main():
 
     solution = differential_evolution(scene)
 
-    new_figs = add_tol_to_figures(solution, scene.figures())
+    new_figs = add_tol_to_figures(solution, scene.figures)
     new_scene = Scene(new_figs)
 
     scene.plot()
     new_scene.plot()
 
-    print("Пересекаются ли фигуры:", isIntersect_pro(new_scene.figures()))
+    print("Пересекаются ли фигуры:", isIntersect_pro(new_scene.figures))
 
 if __name__ == '__main__':
     main()
