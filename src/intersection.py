@@ -4,33 +4,20 @@ from typing import List
 
 from itertools import combinations
 
-from Figures.Parlgram import Parlgram
-from Figures.Cylinder import Cylinder
 from Figures.Figure import Figure
+from utils import distance
 
 
-# deprecated
-def isIntersect(cyl: Cylinder, parl: Parlgram):
-    def f(x, *args):
-        return [
-            # Parlgram
-            abs(x[0] - parl.x0) - parl.length / 2,
-            abs(x[1] - parl.y0) - parl.width / 2,
-            abs(x[2] - parl.z0) - parl.height / 2,
-
-            # Cylinder
-            (x[0] - cyl.x0) ** 2 + (x[1] - cyl.y0) ** 2 - cyl.R ** 2,
-            abs(x[2] - cyl.z0) - cyl.h / 2
-        ]
-
-    sol = optimize.root(f, x0=np.ones(5))
-    print(sol)
-    print(f(sol.x)[:3])
-
-    return sol.x
+def pre_outer_raidus_diff(figure_1: Figure, figure_2: Figure) -> float:
+    s = distance(figure_1.center, figure_2.center)
+    return s - (figure_1.outer_radius + figure_2.outer_radius)
 
 
 def isIntersect_pro_pair(figure_1: Figure, figure_2: Figure) -> bool:
+    r_diff = pre_outer_raidus_diff(figure_1, figure_2)
+    if r_diff > 0:
+        return False
+
     cons = figure_1.ineq() + figure_2.ineq()
     f = lambda x: 0
     # method= COBYLA, SLSQP

@@ -10,3 +10,6 @@ def split(x: List[float], figures: List[Figure]) -> List[List[float]]:
         res.append(x[prev_n: prev_n + n])
         prev_n = n
     return res
+
+def distance(x: List[float], y: List[float]) -> float:
+    return ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2 + (x[2] - y[2])) ** 0.5
