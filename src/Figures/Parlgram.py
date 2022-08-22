@@ -19,7 +19,6 @@ class Parlgram(Figure):
     def center(self) -> List[float]:
         return [self.x0, self.y0, self.z0]
 
-    @property
     def mu_params(self) -> List[float]:
         return [self.length, self.width, self.height]
 
@@ -31,7 +30,7 @@ class Parlgram(Figure):
         )
 
     def add_tol_to_mu_params(self, tolerances: List[float]):
-        mu_params = self.mu_params
+        mu_params = self.mu_params()
         assert len(mu_params) == len(tolerances)
         return Parlgram(self.center,
                         [self.length + tolerances[0], self.width + tolerances[1], self.height + tolerances[2]])

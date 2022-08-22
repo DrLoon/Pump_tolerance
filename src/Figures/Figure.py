@@ -11,7 +11,6 @@ class Figure(ABC):
     def center(self) -> List[float]:
         raise NotImplementedError("")
 
-    @property
     def mu_params(self) -> List[float]:
         raise NotImplementedError("")
 
@@ -19,7 +18,7 @@ class Figure(ABC):
         raise NotImplementedError("")
 
     def all_params(self) -> List[float]:
-        return self.center + self.mu_params
+        return self.center + self.mu_params()
 
     def isBelongs(self, point: List[float]):
         assert len(point) == 3
@@ -30,8 +29,8 @@ class Figure(ABC):
         return True
 
     def plot(self, ax, n: int, scatter: bool = False):
-        from_ = min(self.center) - max(self.mu_params)
-        to_ = max(self.center) + max(self.mu_params)
+        from_ = min(self.center) - max(self.mu_params())
+        to_ = max(self.center) + max(self.mu_params())
 
         points = np.random.uniform(from_, to_, (n, 3))
 

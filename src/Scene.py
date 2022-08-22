@@ -22,7 +22,7 @@ class Scene:
     def mutable_params_count(self) -> int:
         n = 0
         for i in self.figures:
-            n += len(i.mu_params)
+            n += len(i.mu_params())
         return n
 
     def __is_figure_in_workspace(self, figure: Figure):

@@ -15,7 +15,6 @@ class Sphere(Figure):
     def center(self) -> List[float]:
         return [self.x0, self.y0, self.z0]
 
-    @property
     def mu_params(self) -> List[float]:
         return [self.R]
 
@@ -27,6 +26,6 @@ class Sphere(Figure):
         )
 
     def add_tol_to_mu_params(self, tolerances: List[float]):
-        mu_params = self.mu_params
+        mu_params = self.mu_params()
         assert len(mu_params) == len(tolerances)
         return Sphere(self.center, self.R + tolerances[0])

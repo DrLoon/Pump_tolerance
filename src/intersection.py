@@ -9,6 +9,7 @@ from Figures.Cylinder import Cylinder
 from Figures.Figure import Figure
 
 
+# deprecated
 def isIntersect(cyl: Cylinder, parl: Parlgram):
     def f(x, *args):
         return [
