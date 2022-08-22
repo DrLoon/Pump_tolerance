@@ -10,6 +10,10 @@ class Sphere(Figure):
         self.y0 = center[1]
         self.z0 = center[2]
         self.R = radius
+        super().__init__()
+
+    def _set_outer_radius(self) -> float:
+        return self.R
 
     @property
     def center(self) -> List[float]:

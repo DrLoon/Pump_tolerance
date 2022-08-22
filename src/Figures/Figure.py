@@ -1,20 +1,31 @@
 from typing import List, Tuple, Dict
 import numpy as np
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Figure(ABC):
+    def __init__(self):
+        self.outer_radius = self._set_outer_radius()
+
+    @abstractmethod
     def ineq(self) -> Tuple[Dict]:
         raise NotImplementedError("")
 
     @property
+    @abstractmethod
     def center(self) -> List[float]:
         raise NotImplementedError("")
 
+    @abstractmethod
     def mu_params(self) -> List[float]:
         raise NotImplementedError("")
 
+    @abstractmethod
     def add_tol_to_mu_params(self, tolerances: List[float]):
+        raise NotImplementedError("")
+
+    @abstractmethod
+    def _set_outer_radius(self) -> float:
         raise NotImplementedError("")
 
     def all_params(self) -> List[float]:

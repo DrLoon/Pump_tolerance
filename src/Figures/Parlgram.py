@@ -14,6 +14,10 @@ class Parlgram(Figure):
         self.length = boundaries[0]
         self.width = boundaries[1]
         self.height = boundaries[2]
+        super().__init__()
+
+    def _set_outer_radius(self) -> float:
+        return (self.length**2 + self.width**2 + self.height**2) ** 0.5
 
     @property
     def center(self) -> List[float]:

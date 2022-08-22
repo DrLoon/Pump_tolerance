@@ -11,6 +11,10 @@ class Cylinder(Figure):
         self.z0 = center[2]
         self.R = radius
         self.h = height
+        super().__init__()
+
+    def _set_outer_radius(self) -> float:
+        return (self.R**2 + (self.h/2)**2) ** 0.5
 
     @property
     def center(self) -> List[float]:
