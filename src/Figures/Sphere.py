@@ -1,4 +1,5 @@
 from typing import List
+import numpy as np
 
 from .Figure import Figure
 
@@ -33,3 +34,12 @@ class Sphere(Figure):
         mu_params = self.mu_params()
         assert len(mu_params) == len(tolerances)
         return Sphere(self.center, self.R + tolerances[0])
+
+    def plot(self, ax, n: int, scatter: bool = False):
+        # draw sphere
+        u = np.linspace(0, 2 * np.pi, 30)
+        v = np.linspace(0, np.pi, 30)
+        x = self.R * np.outer(np.cos(u), np.sin(v)) + self.x0
+        y = self.R * np.outer(np.sin(u), np.sin(v)) + self.y0
+        z = self.R * np.outer(np.ones(np.size(u)), np.cos(v)) + self.z0
+        ax.plot_surface(x, y, z)
