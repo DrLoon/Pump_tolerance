@@ -13,15 +13,9 @@ from Figures.Figure import Figure
 from Scene import Scene
 
 from intersection import isIntersect_pro
-from utils import split
+from utils import add_tol_to_figures
 
 
-def add_tol_to_figures(tols: List[float], figures: List[Figure]):
-    tols = split(tols, figures)
-    new_figures = []
-    for i in range(len(figures)):
-        new_figures.append(figures[i].add_tol_to_mu_params(tols[i]))
-    return new_figures
 
 def F(x: List[float], *args: Scene) -> float:
     figures: List[Figure] = args[0].figures
