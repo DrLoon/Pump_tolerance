@@ -28,9 +28,9 @@ def F(x: List[float], *args: Scene) -> float:
 
     new_figures = add_tol_to_figures(x, figures)
 
-    if isIntersect_pro(new_figures):
-        return np.random.uniform(666, 999)
-    return -min(x)  # better to use "-min(x)"
+    if inter := isIntersect_pro(new_figures):
+        return inter
+    return -min(x)
 
 def differential_evolution(scene: Scene):
     bounds = [(0, 10) for _ in range(scene.mutable_params_count())]
@@ -43,9 +43,9 @@ def genetic_algorithm(scene: Scene):
 
         new_figures = add_tol_to_figures(solution, figures)
 
-        if isIntersect_pro(new_figures):
-            return -np.random.uniform(666, 999)
-        return min(solution)  # better to use "-min(x)"
+        if inter := isIntersect_pro(new_figures):
+            return -inter
+        return min(solution)
 
     def callback_on_generation(ga_instance):
         print("Generation:", ga_instance.generations_completed)

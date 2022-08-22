@@ -13,29 +13,32 @@ def pre_outer_raidus_diff(figure_1: Figure, figure_2: Figure) -> float:
     return s - (figure_1.outer_radius + figure_2.outer_radius)
 
 
-def isIntersect_pro_pair(figure_1: Figure, figure_2: Figure) -> bool:
+def isIntersect_pro_pair(figure_1: Figure, figure_2: Figure) -> float:
     r_diff = pre_outer_raidus_diff(figure_1, figure_2)
     if r_diff > 0:
-        return False
+        return 0
 
     cons = figure_1.ineq() + figure_2.ineq()
     f = lambda x: 0
     # method= COBYLA, SLSQP
     # noinspection PyTypeChecker
     sol = optimize.minimize(f, x0=np.random.uniform(-1, 1, 3), constraints=cons, method="COBYLA")
-    return sol.success
+
+    if sol.success:
+        return -r_diff
+    return 0
 
 
-def isIntersect_pro(figures: List[Figure]) -> bool:
+def isIntersect_pro(figures: List[Figure]) -> float:
     combs = combinations(figures, 2)
     for i in combs:
-        if isIntersect_pro_pair(i[0], i[1]):
-            return True
+        if inter:=isIntersect_pro_pair(i[0], i[1]):
+            return inter
     return False
 
 
-def isIntersect_pro_1_to_many(figure: Figure, figures: List[Figure]) -> bool:
+def isIntersect_pro_1_to_many(figure: Figure, figures: List[Figure]) -> float:
     for i in figures:
-        if isIntersect_pro_pair(figure, i):
-            return True
+        if inter:=isIntersect_pro_pair(figure, i):
+            return inter
     return False
