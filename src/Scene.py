@@ -25,6 +25,12 @@ class Scene:
             n += len(i.mu_params())
         return n
 
+    def bounds_mut_params(self) -> List[List[float]]:
+        r = []
+        for i in self.figures:
+            r += i.bounds_mut_params()
+        return r
+
     def __is_figure_in_workspace(self, figure: Figure):
         raise NotImplementedError("")
 

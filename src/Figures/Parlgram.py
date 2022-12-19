@@ -26,6 +26,9 @@ class Parlgram(Figure):
     def mu_params(self) -> List[float]:
         return [self.length, self.width, self.height]
 
+    def bounds_mut_params(self) -> List[List[float]]:
+        return [[0, np.inf] for _ in self.mu_params()]
+
     def ineq(self):
         return (
             {'type': 'ineq', 'fun': lambda x: -1 * abs(x[0] - self.x0) + self.length / 2},  # |x-x0|<=l/2

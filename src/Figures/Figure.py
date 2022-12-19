@@ -28,6 +28,10 @@ class Figure(ABC):
     def _set_outer_radius(self) -> float:
         raise NotImplementedError("")
 
+    @abstractmethod
+    def bounds_mut_params(self) -> List[List[float]]:
+        raise NotImplementedError("")
+
     def all_params(self) -> List[float]:
         return self.center + self.mu_params()
 
@@ -40,8 +44,8 @@ class Figure(ABC):
         return True
 
     def plot(self, ax, n: int, scatter: bool = False):
-        from_ = min(self.center) - max(self.mu_params())
-        to_ = max(self.center) + max(self.mu_params())
+        from_ = min(self.center) - self.outer_radius
+        to_ = max(self.center) + self.outer_radius
 
         points = np.random.uniform(from_, to_, (n, 3))
 

@@ -1,4 +1,5 @@
 from typing import List
+import numpy as np
 
 from .Figure import Figure
 
@@ -22,6 +23,9 @@ class Cylinder(Figure):
 
     def mu_params(self) -> List[float]:
         return [self.R, self.h]
+
+    def bounds_mut_params(self) -> List[List[float]]:
+        return [[0, np.inf] for _ in self.mu_params()]
 
     def ineq(self):
         return (
