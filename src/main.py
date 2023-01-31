@@ -4,62 +4,35 @@ from tqdm import tqdm
 from copy import copy
 from typing import List, Tuple, Union
 
-import pygad
-
+from Figures.Figure import Figure
 from Figures.Parlgram import Parlgram
 from Figures.Cylinder import Cylinder
 from Figures.Sphere import Sphere
-from Figures.Figure import Figure
+from Figures.Cone import Cone
 from Scene import Scene
 
 from intersection import isIntersect_pro
-from utils import add_tol_to_figures
-
+from utils import add_tol_to_figures, convert_from_norm
 
 
 def F(x: List[float], *args: Scene) -> float:
     figures: List[Figure] = args[0].figures
-
-    new_figures = add_tol_to_figures(x, figures)
+    bounds = np.clip(args[0].bounds_mut_params(), 0, 10)
+    real = convert_from_norm(x, bounds)
+    new_figures = add_tol_to_figures(real, figures)
 
     if inter := isIntersect_pro(new_figures):
         return inter
-    return -min(x)
+
+    return -min(x)-sum(x)
 
 def differential_evolution(scene: Scene):
-    bounds = [(0, 10) for _ in range(scene.mutable_params_count())]
-    sol = optimize.differential_evolution(F, args=(scene,), bounds=bounds, maxiter=100, disp=True, workers=8)
-    return sol.x
-
-def genetic_algorithm(scene: Scene):
-    def fitness_func(solution, solution_idx):
-        figures: List[Figure] = scene.figures
-
-        new_figures = add_tol_to_figures(solution, figures)
-
-        if inter := isIntersect_pro(new_figures):
-            return -inter
-        return min(solution)
-
-    def callback_on_generation(ga_instance):
-        print("Generation:", ga_instance.generations_completed)
-        print("Fitness of the best solution :", fitness_func(ga_instance.best_solutions[-1], 0))
-
-    gene_space = [{'low': 0, 'high': 10} for _ in range(scene.mutable_params_count())]
-    ga_instance = pygad.GA(num_generations=100,
-                           num_parents_mating=5,
-                           fitness_func=fitness_func,
-                           num_genes=len(gene_space),
-                           sol_per_pop=100,
-                           gene_space=gene_space,
-                           save_best_solutions=True,
-                           on_generation=callback_on_generation
-                           )
-    ga_instance.run()
-    solution, solution_fitness, solution_idx = ga_instance.best_solution()
-    print("Parameters of the best solution : {solution}".format(solution=solution))
-    print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
-    return solution
+    bounds = [[0,1] for _ in range(scene.mutable_params_count())]
+    sol = optimize.differential_evolution(F, args=(scene,), bounds=bounds, maxiter=200, disp=True, workers=8, polish=False)
+    bounds = np.clip(scene.bounds_mut_params(), 0, 10)
+    print(sol.x)
+    real = convert_from_norm(sol.x, bounds)
+    return real
 
 def main():
     g_parlgram = Parlgram([2, 2, 2], [2, 2, 2])
@@ -67,15 +40,19 @@ def main():
     g_cylinder = Cylinder([0, 0, 0], 2, 1)
     g_sphere = Sphere([-15, -15, -15], 0.25)
 
-    scene = Scene([g_parlgram, g_cylinder, g_parlgram2, g_sphere])
+    cone = Cone([9,9,9], 3.1415/8, 5, 3)
+    # scene = Scene([cone])
+    # scene.plot(n=1000000, scatter=True)
 
+    scene = Scene([g_parlgram, g_cylinder, g_parlgram2, g_sphere, cone, Cylinder([14,11,5], 2, 1)])
     solution = differential_evolution(scene)
+    print(solution)
 
     new_figs = add_tol_to_figures(solution, scene.figures)
     new_scene = Scene(new_figs)
 
     scene.plot()
-    new_scene.plot()
+    new_scene.plot(n=100000)
 
     print("Пересекаются ли фигуры:", isIntersect_pro(new_scene.figures))
 

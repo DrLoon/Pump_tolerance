@@ -22,7 +22,7 @@ def isIntersect_pro_pair(figure_1: Figure, figure_2: Figure) -> float:
     f = lambda x: 0
     # method= COBYLA, SLSQP
     # noinspection PyTypeChecker
-    sol = optimize.minimize(f, x0=np.random.uniform(-1, 1, 3), constraints=cons, method="COBYLA")
+    sol = optimize.minimize(f, x0=np.array([0.5,0.5,0.5]), constraints=cons, method="SLSQP", options={'maxiter':100000})
 
     if sol.success:
         return -r_diff

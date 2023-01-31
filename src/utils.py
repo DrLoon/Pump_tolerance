@@ -1,4 +1,5 @@
 from typing import List
+import numpy as np
 
 from Figures.Figure import Figure
 
@@ -20,3 +21,15 @@ def add_tol_to_figures(tols: List[float], figures: List[Figure]):
     for i in range(len(figures)):
         new_figures.append(figures[i].add_tol_to_mu_params(tols[i]))
     return new_figures
+
+def convert_from_norm(x: List[float], bounds: List[List[float]]):
+    res = []
+    for i in range(len(x)):
+        assert 0 <= x[i] <= 1
+        assert bounds[i][0] == 0 and bounds[i][1] >= 0
+        if bounds[i][1] == np.inf:
+            res.append(1.0 / (1 - x[i]) - 1.0)
+        else:
+            res.append(x[i] * bounds[i][1])
+
+    return res
